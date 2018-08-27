@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar text-center color="primary">
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div *ngIf="statistic.values[0] != 0 ||  statistic.values[1] != 0 || statistic.values[2] != 0 || statistic.values[3] != 0">
+        <p text-center><strong>Statistic</strong></p>
+        <hr>
+        <div style="display: block">
+            <canvas #statisticChart='base-chart' baseChart [data]="statistic.values" [labels]="statistic.labels" [chartType]="statistic.type" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+
+        <div *ngIf="settings.SMS.USE_PACKAGE">
+            <hr>
+            <p text-center><strong>SMS Package Used</strong></p>
+            <progress-bar [text]="packagePercentUsed()+'%'" [progress]="packagePercentUsed()"></progress-bar>
+            <hr>
+        </div>
+
+    </div>
+    <div *ngIf="!settings.SMS.USE_PACKAGE">
+        <hr>
+        <p text-center><strong>Unlimited SMS Package: &nbsp;  <span style="font-size:1.6em;"><ion-icon color="secondary" name="checkmark"></ion-icon></span></strong></p>
+        <hr>
+    </div>
+
+    <div *ngIf="!settings.SMS.AUTO_SEND && (settings.SMS.USE_PACKAGE==false || settings.SMS.USE_PACKAGE && packagePercentUsed() < 100)">
+        <button *ngIf="!isSending" full ion-button (click)="startSending()" icon-left>
+            <ion-icon name="send"></ion-icon>
+            Start Sending
+        </button>
+        <button *ngIf="isSending " color="danger" full ion-button icon-left (click)="stopSending()">
+            <ion-icon name="pause"></ion-icon>
+            Stop Sending
+        </button>
+    </div>
+
+
+    <div *ngIf="settings.SMS.USE_PACKAGE && packagePercentUsed() == 100 ">
+        <p text-center><strong>Your SMS package has been expired.</strong></p>
+        <hr>
+        <button full ion-button (click)="renewSMSPackage()">Renew Package</button>
+    </div>
+</ion-content>

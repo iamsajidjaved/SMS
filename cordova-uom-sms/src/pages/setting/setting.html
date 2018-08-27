@@ -1,0 +1,121 @@
+<ion-header>
+    <ion-navbar text-center color="primary">
+        <ion-title>
+            Settings
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="card">
+        <h5 class="title">SMS</h5>
+        <ion-list>
+            <ion-item>
+                <a icon-only clear item-start>
+                    <ion-icon name="send"></ion-icon>
+                </a>
+                <ion-label> Auto Send SMS</ion-label>
+                <ion-toggle (ionChange)="onAutoSendChanged()" [(ngModel)]="settings.SMS.AUTO_SEND" checked="true"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+                <a icon-only clear item-start>
+                    <ion-icon name="archive"></ion-icon>
+                </a>
+                <ion-label> Use SMS Package</ion-label>
+                <ion-toggle [(ngModel)]="settings.SMS.USE_PACKAGE" checked="false"></ion-toggle>
+            </ion-item>
+            <button (click)="showSMSLimitSetting()" [disabled]="!settings.SMS.USE_PACKAGE" ion-item>
+              <a icon-only clear item-start>
+                  <ion-icon name="calculator"></ion-icon>
+              </a>
+               Set SMS Limit
+               <span *ngIf="settings.SMS.USE_PACKAGE" style="color:#aaa;float:right">{{ settings.SMS.PACKAGE_USED +'/'+settings.SMS.LIMIT }}</span>
+          </button>
+
+            <button (click)="showSMSQueueSetting()" ion-item>
+            <a icon-only clear item-start>
+                <ion-icon name="filing"></ion-icon>
+            </a>
+             Manage SMS Queue
+             <span style="color:#aaa;float:right">{{ settings.SMS.QUEUE }}</span>
+        </button>
+
+            <button (click)="showSMSIntervalSetting()" ion-item>
+              <a icon-only clear item-start>
+                  <ion-icon name="timer"></ion-icon>
+              </a>
+               Send SMS After <span style="color:#aaa;float:right">{{ getInterval() }}</span>
+          </button>
+        </ion-list>
+    </div>
+
+    <div class="card">
+        <h5 class="title">Server</h5>
+        <ion-list>
+            <ion-item>
+                <a icon-only clear item-start>
+                    <ion-icon name="redo"></ion-icon>
+                </a>
+                <ion-label> Push Incoming SMS</ion-label>
+                <ion-toggle (ionChange)="onIncomingSMSSettingChanged()" [(ngModel)]="settings.SERVER.PUSH_INCOMING" checked="true"></ion-toggle>
+            </ion-item>
+            <button [disabled]="!settings.SERVER.PUSH_INCOMING" (click)="showServerURLSettings()" ion-item>
+              <a icon-only clear item-start>
+                  <ion-icon name="link"></ion-icon>
+              </a>
+              <h3> <strong> SMS To URL</strong></h3>
+              <p *ngIf="settings.SERVER.PUSH_INCOMING">{{ settings.SERVER.URL }}</p>
+
+          </button>
+        </ion-list>
+    </div>
+    <div class="card">
+        <h5 class="title">Notification</h5>
+        <ion-list>
+            <button (click)="showNotificationSettings()" ion-item>
+          <a icon-only clear item-start>
+              <ion-icon name="notifications"></ion-icon>
+          </a>
+           Manage Notifications
+      </button>
+
+            <button (click)="showOneSignalAppSettings()" ion-item>
+            <a icon-only clear item-start>
+                <ion-icon name="add-circle"></ion-icon>
+            </a>
+            <h3> <strong> <span *ngIf="!settings.NOTIFICATION.OneSignal_APP_ID">Set</span> API KEY</strong></h3>
+            <p *ngIf="settings.NOTIFICATION.OneSignal_APP_ID">{{ settings.NOTIFICATION.OneSignal_APP_ID }}</p>
+       </button>
+
+            <!--  <button (click)="showGoogleAppSettings()" ion-item>
+            <a icon-only clear item-start>
+                <ion-icon name="add"></ion-icon>
+            </a>
+
+            <h3> <strong> <span *ngIf="!settings.NOTIFICATION.GOOGLE_APP_ID">Set</span> Google App Id</strong></h3>
+            <p *ngIf="settings.NOTIFICATION.GOOGLE_APP_ID">{{ settings.NOTIFICATION.GOOGLE_APP_ID }}</p>
+
+        </button> -->
+
+        </ion-list>
+    </div>
+
+    <div class="card">
+        <h5 class="title">About</h5>
+        <ion-list>
+            <button ion-item>
+                <a icon-only clear item-start>
+                    <ion-icon name="help"></ion-icon>
+                </a>
+                Help
+            </button>
+            <button ion-item>
+                <a icon-only clear  class="icon" item-start>
+                    <img width="20" src="assets/images/logo.png" alt="Logo">
+                </a>
+                SMS From Web <small>Version 1.0.0</small>
+            </button>
+        </ion-list>
+    </div>
+</ion-content>

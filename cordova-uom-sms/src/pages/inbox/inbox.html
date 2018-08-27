@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar color="primary" text-center>
+        <!-- <ion-buttons left>
+            <button ion-button icon-only>
+            <ion-icon  name="help-circle"></ion-icon>
+          </button>
+        </ion-buttons> -->
+        <ion-title>Inbox - All</ion-title>
+        <ion-buttons right>
+            <button (click)="presentPopover($event)" ion-button icon-only>
+            <!-- <ion-icon  name="ios-funnel"></ion-icon> -->
+            <ion-icon  name="more"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list [virtualScroll]="messages">
+        <ion-item-sliding *virtualItem="let message">
+            <ion-item style="padding-left:0;" class="messages">
+                <ion-avatar item-left>
+                    <ion-icon [class.icon-sent]="message.status==1" class="message-icon" [name]="message.status==1?'ios-undo-outline':(message.status==0?'filing':(message.status==-1?'archive':'cloud-done'))"></ion-icon>
+                </ion-avatar>
+                <h2>{{ message.address }}</h2>
+                <p>{{ message.body }}</p>
+                <!-- <ion-note item-end>
+                    9:38 pm
+                </ion-note> -->
+            </ion-item>
+            <ion-item-options (ionSwipe)="onItemSlideLeft($event,message)" side="left">
+                <button (click)="deleteSMS(message)" expandable ion-button color="danger">
+                    <ion-icon name="trash"></ion-icon>
+                   Delete
+                  </button>
+            </ion-item-options>
+            <ion-item-options (ionSwipe)="onItemSlideRight($event,message)" side="right">
+                <button ion-button expandable color="secondary">
+                    <ion-icon name="send"></ion-icon>
+                    Send
+                  </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll distance="10%" (ionInfinite)="doInfinite($event)">
+        <!-- <ion-spinner style="top: 10px; " class="spinner-light"></ion-spinner> -->
+        <ion-infinite-scroll-content loadingText="Loading..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

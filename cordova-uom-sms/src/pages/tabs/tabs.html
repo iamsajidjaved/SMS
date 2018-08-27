@@ -1,0 +1,7 @@
+<ion-tabs color="primary">
+    <ion-tab root="HomePage" tabTitle="Home" tabIcon="home"></ion-tab>
+    <ion-tab root="InboxPage" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>
+    <ion-tab root="QueuePage" [tabBadge]="queueCount>0?queueCount:null" tabBadgeStyle="danger" tabTitle="Queue" tabIcon="filing"></ion-tab>
+    <ion-tab root="SettingPage" tabTitle="Settings" tabIcon="construct"></ion-tab>
+    <ion-tab root="AboutPage" tabTitle="About" tabIcon="information-circle"></ion-tab>
+</ion-tabs>

@@ -1,0 +1,10 @@
+<div class="progress-outer">
+    <div class="progress-inner" [style.background-color]="progress <=50?'#488aff':(progress <=80?'#f58e0f':'#ff3333')" [style.width]="progress + '%'">
+        <span *ngIf="text !=null">
+          {{text}}
+        </span>
+        <span *ngIf="text==null">
+          {{progress}}%
+        </span>
+    </div>
+</div>
